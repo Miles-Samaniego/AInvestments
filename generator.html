@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investment Portfolio Creator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav">
+  <nav>
+    <a href="index.html" class = "header-button" title="Home"> Home</a>
+    <a href="generator.html" class = "header-button" title="Generate"> Generate</a>
+    <a href="about.html" class = "header-button" title="About"> About</a>
+  </nav>
+</header>
+<div class="container">
+  <h1>Portfolio Generator</h1>
+  <div class="form-group">
+    <label for="dollarValue">Investment Amount ($)</label>
+    <input type="text" id="dollarValue" name="dollarValue">
+  </div>
+  <div class="form-group">
+    <label for="term">Investment Duration</label>
+    <select id="term" name="term">
+      <option value="">None</option>
+      <option value="long">Long Term</option>
+      <option value="short">Short Term</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="risk">Risk Preference</label>
+    <select id="risk" name="risk">
+      <option value="">None</option>
+      <option value="risky">Risky</option>
+      <option value="safe">Safe</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="tagsInput">Investment Tags</label>
+    <input type="text" id="tagsInput" placeholder="Press Enter to add tags">
+    <div id="tags" class="tags"></div>
+  </div>
+  <button id="createPortfolio">Create Portfolio</button>
+  <div id="loading">Loading...</div>
+  <div id="results" class="results"></div>
+</div>
+
+<script>
+  let tags = [];
+
+  document.getElementById('tagsInput').addEventListener('keyup', function(event) {
+    if (event.key === 'Enter') {
+      const tag = event.target.value.trim();
+      if (tag) {
+        tags.push(tag);
+        updateTags();
+        event.target.value = '';
+      }
+    }
+  });
+
+  function updateTags() {
+    const tagsDiv = document.getElementById('tags');
+    tagsDiv.innerHTML = '';
+    tags.forEach((tag, index) => {
+      const tagElement = document.createElement('div');
+      tagElement.classList.add('tag');
+      tagElement.innerText = tag;
+      const deleteButton = document.createElement('button');
+      deleteButton.innerHTML = '&times;';
+      deleteButton.addEventListener('click', () => {
+        tags.splice(index, 1);
+        updateTags();
+      });
+      tagElement.appendChild(deleteButton);
+      tagsDiv.appendChild(tagElement);
+    });
+  }
+
+  document.getElementById('createPortfolio').addEventListener('click', async function() {
+    const dollarValue = document.getElementById('dollarValue').value;
+    const term = document.getElementById('term').value;
+    const risk = document.getElementById('risk').value;
+
+    let isValid = true;
+
+    if (!dollarValue) {
+      document.getElementById('dollarValue').classList.add('error');
+      isValid = false;
+    } else {
+      document.getElementById('dollarValue').classList.remove('error');
+    }
+
+    if (!term) {
+      document.getElementById('term').classList.add('error');
+      isValid = false;
+    } else {
+      document.getElementById('term').classList.remove('error');
+    }
+
+    if (!risk) {
+      document.getElementById('risk').classList.add('error');
+      isValid = false;
+    } else {
+      document.getElementById
+      ('risk').classList.remove('error');
+    }
+
+    if (!isValid) {
+      alert('Please fill out all fields.');
+      return;
+    }
+
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('results').innerHTML = '';
+
+    const response = await fetch('http://localhost:3000/create-portfolio', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ dollarValue, term, risk, tags }),
+    });
+
+    const data = await response.json();
+
+    document.getElementById('loading').style.display = 'none';
+    displayResults(data);
+    clearFields();
+  });
+
+  function displayResults(data) {
+
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = ''; // Clear previous results
+
+    data.forEach((item, index)=> {
+
+      const resultCard = document.createElement('div');
+      resultCard.classList.add('result-card');
+      const resultGrid = document.createElement('div');
+      resultGrid.classList.add('result-grid');
+
+      if (item !== 0) {
+
+        let head = "";
+
+        if (index === 0) {
+            header = "Stocks";
+        }
+        else if (index === 1) {
+            header = "Crypto";
+        }
+        else {
+            header = "Real Estate";
+        }
+
+        const section_head = document.createElement('h2');
+        section_head.innerText = header;
+
+        resultCard.appendChild(section_head);
+
+        item.forEach(element => {
+            for (const key in element) {
+                const keyDiv = document.createElement('div');
+                keyDiv.innerText = key;
+                const valueDiv = document.createElement('div');
+                valueDiv.innerText = element[key];
+                resultGrid.appendChild(keyDiv);
+                resultGrid.appendChild(valueDiv);
+ 
+            }
+            /*const div_line = document.createElement('hr');
+            resultGrid.appendChild(div_line);*/
+            resultCard.appendChild(resultGrid);
+            resultsDiv.appendChild(resultCard);
+        })
+      }
+      
+    });
+  }
+
+  function clearFields() {
+    document.getElementById('dollarValue').value = '';
+    document.getElementById('term').selectedIndex = 0;
+    document.getElementById('risk').selectedIndex = 0;
+    tags = [];
+    updateTags();
+    // Clear error styles
+    document.getElementById('dollarValue').classList.remove('error');
+    document.getElementById('term').classList.remove('error');
+    document.getElementById('risk').classList.remove('error');
+  }
+</script>
+</body>
+</html>

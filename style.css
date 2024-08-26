@@ -1,0 +1,212 @@
+
+:root{
+  --lime: #E2DADB;
+  --button-header: #b798b0;
+  --text: #DAE2DF;
+  --text2: #694966;
+  --button-hover: #5C415D;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color:#CFD8D7;
+    color: #694966;
+  }
+  .container {
+    max-width: 600px;
+    margin: auto;
+    background: var(--lime);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+  .page-background {
+    background-image: url("Stocks.png");
+    scale: 100%;
+  }
+  hr {
+    margin: 2em auto; /* centred margin */
+    height: 2px; /* thickness of the line */
+    background-color: black; /* colour of the line */
+    border: none; /* no border */
+  }
+  h1 {
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  h1::first-letter {
+    color:#00ff8c;
+  }
+  h2 {
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .home-nav {
+    text-align: center;
+    padding-top: 20%;
+    padding-bottom: 10%;
+  }
+  .form-group {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 20px;
+  }
+  a.button {
+    background-color: var(--button-header);
+    padding: 10px;
+    color:var(--text);
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: xx-large;
+    font-weight: bold;
+    position: relative;
+  }
+  a.button:hover {
+    transform: scale(1.05);
+    background-color: var(--button-hover);
+    border-radius: 75px;
+  }
+  header {
+    text-align: center;
+    background-color: var(--button-header);
+    font-size: x-large;
+    font-weight: bold;
+    max-width: 600px;
+    padding: 0px;
+    margin: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+  header.nav {
+    text-align: center;
+    background-color: var(--button-header);
+    word-spacing: 60px;
+    font-size: x-large;
+    font-weight: bold;
+    padding: 10px;
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 30px;
+    border-radius: 10px;
+  }
+  a.header-button {
+    color: var(--text2);
+    text-decoration: none;
+    background-color: #55555500;
+    border-radius: 30px;
+    padding: 5px;
+    
+  }
+  a.header-button:hover {
+    color: var(--text);
+    background-color: var(--button-hover);
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--button-header);
+  }
+  input[type="text"], select {
+    width: 100%;
+    padding: 10px;
+    padding-right: 0px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background: #DAE2DF;
+    color: var(--button-header);
+    font-size: 16px;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    gap: 10px;
+  }
+  .tag {
+    background: var(--button-header);
+    color: white;
+    border-radius: 30px;
+    padding-left: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .tag button {
+    background: none;
+    border: none;
+    color: white;
+    margin-left: 0px;
+    cursor: pointer;
+    line-height: 0%;
+    font-size: 40px;
+    border-radius: 100%;
+    scale: 50%;
+    align-items: center;
+  }
+  
+  button {
+    background-color: var(--text2); /* Slightly lighter gray */
+    color: var(--text);
+    border: 1px solid var(--button-header); /* Light purple-gray */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  button:hover {
+    background-color: var(--button-header); /* Light purple-gray */
+    border-color: var(--button-hover); /* Light purple-gray */
+  }
+  button:disabled {
+    background-color: #444;
+    border-color: #444;
+  }
+  #loading {
+    text-align: center;
+    margin-top: 20px;
+    display: none;
+  }
+  .results {
+    margin-top: 20px;
+  }
+  .result-card {
+    border: 1px solid #6a5acd; /* Light purple-gray */
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background: #1e1e1e;
+    color: #e0e0e0;
+  }
+  .result-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+  }
+  .result-grid div {
+    padding: 5px;
+  }
+  .result-grid div:nth-child(odd) {
+    background-color: #2c2c2c;
+  }
+  .result-grid div:nth-child(even) {
+    background-color: #333;
+  }
+  .error {
+    border: 1px solid red !important;
+  }
